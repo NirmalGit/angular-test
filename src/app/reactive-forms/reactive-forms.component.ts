@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { MyServiceService } from '../my-service.service';
 
 @Component({
   selector: 'app-reactive-forms',
@@ -11,14 +12,21 @@ export class ReactiveFormsComponent implements OnInit {
   email: FormControl = new FormControl('');
   password: FormControl = new FormControl('');
 
-  constructor() { }
+  constructor(private service:MyServiceService) { }
 
   ngOnInit() {
   }
 
   login(){
-    console.log(this.email.value);
-    console.log(this.password.value);
+    console.warn(this.email);
+    console.warn(this.password);
+   // this.email.setValue("email@mail.com");
+
+    this.email.setValidators([Validators.required]);
+    this.email.updateValueAndValidity();
+
+    this.service.postData();
+
   }
 
 }
